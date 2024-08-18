@@ -18,7 +18,6 @@ Ensure you have Python 3.7 or later installed. You will also need to install the
 
     ```bash
     git clone https://github.com/Ro-han12/Tic-Tac-Toe
-    cd Tic-tac-toe
     ```
 
 2. **Create a virtual environment** (optional but recommended):
