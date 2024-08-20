@@ -1,18 +1,21 @@
+import numpy as np
 import tensorflow as tf
-from tensorflow.keras import layers
+from model import TicTacToeGNN
 
-class TicTacToeGNN(tf.keras.Model):
-    def __init__(self):
-        super(TicTacToeGNN, self).__init__()
-        self.conv1 = layers.Conv2D(16, (3, 3), activation='relu', padding='same', input_shape=(3, 3, 1))
-        self.conv2 = layers.Conv2D(32, (3, 3), activation='relu', padding='same')
-        self.flatten = layers.Flatten()
-        self.fc1 = layers.Dense(64, activation='relu')
-        self.fc2 = layers.Dense(9, activation='softmax')  # 9 output units for 3x3 grid
+# Example corrected training data
+# Random board states (3x3 grid, single channel)
+X_train = np.random.randint(0, 2, (1000, 3, 3, 1)).astype('float32')  # Convert to float32
+# Random correct moves (one-hot encoded)
+y_train = np.zeros((1000, 9))
+for i in range(1000):
+    y_train[i, np.random.randint(0, 9)] = 1  # Random valid move
 
-    def call(self, inputs):
-        x = self.conv1(inputs)
-        x = self.conv2(x)
-        x = self.flatten(x)
-        x = self.fc1(x)
-        return self.fc2(x)
+# Initialize and compile the model
+model = TicTacToeGNN()
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+# Train the model
+model.fit(X_train, y_train, epochs=80)
+
+# Save the model weights
+model.save_weights('model_weights_epochs80.h5')
