@@ -5,7 +5,7 @@ from model import TicTacToeGNN
 # Load the trained model
 model = TicTacToeGNN()
 model.build((None, 3, 3, 1))  # Specify the input shape
-model.load_weights('model_weights.h5')
+model.load_weights('model_weights_epochs50.h5') #replace any model as per choice
 
 def predict_move(board):
     # Add a channel dimension to the board
